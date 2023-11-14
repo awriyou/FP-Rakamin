@@ -1,3 +1,7 @@
 node_modules
 .env
+<<<<<<< HEAD
 public/uploads
+=======
+public/uploads
+>>>>>>> 1ab145456ae24688d4f4fba17ed7a7c3bde00dce
