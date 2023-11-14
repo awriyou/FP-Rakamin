@@ -11,6 +11,7 @@ function authJwt() {
     //!fungsi path dibawah ini saya gunain buat ngehalang authjwt biar gakena ke dia.
     path: [
       //   { url: `${api}/products`, methods: ['GET', 'OPTIONS'] }, //? contoh untuk menspesifikan method dari router nya.
+      { url: /\/public\/uploads(.*)/, methods: ['GET', 'OPTIONS'] }, //Membuka endpoint images dan image untuk bebas diakses oleh user
       { url: /\/api\/v1\/products(.*)/, methods: ['GET', 'OPTIONS'] }, //disini akan digunakan regular expression buat menspesifikan semua router get yang ada di endpoint product
       { url: /\/api\/v1\/categories(.*)/, methods: ['GET', 'OPTIONS'] },
       `${api}/users/login`,
