@@ -1,19 +1,17 @@
 const { User } = require('../models/user');
-const express = require('express');
-const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-router.get(`/`, async (req, res) => {
+exports.getUsers = async (req, res) => {
   const userList = await User.find().select('-passwordHash'); //! umpetin password
 
   if (!userList) {
     res.status(500).json({ success: false });
   }
   res.send(userList);
-});
+};
 
-router.get('/:id', async (req, res) => {
+exports.getUserById = async (req, res) => {
   const user = await User.findById(req.params.id).select('-passwordHash');
   if (!user) {
     return res.status(404).json({
@@ -21,7 +19,7 @@ router.get('/:id', async (req, res) => {
     });
   }
   res.status(200).send(user);
-});
+};
 
 //? API ini digunakan kalo pengen ambil data tertentu nya saja biasanya untuk admin.
 // router.get('/admin', async (req, res) => {
@@ -33,7 +31,7 @@ router.get('/:id', async (req, res) => {
 //   res.send(userList);
 // });
 
-router.post('/', async (req, res) => {
+exports.createUser = async (req, res) => {
   let user = new User({
     name: req.body.name,
     email: req.body.email,
@@ -52,9 +50,9 @@ router.post('/', async (req, res) => {
   }
 
   res.send(user);
-});
+};
 
-router.post('/login', async (req, res) => {
+exports.login = async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
   const secret = process.env.secret;
 
@@ -77,9 +75,9 @@ router.post('/login', async (req, res) => {
   } else {
     res.status(400).send('password is wrong');
   }
-});
+};
 
-router.post('/register', async (req, res) => {
+exports.register = async (req, res) => {
   let user = new User({
     name: req.body.name,
     email: req.body.email,
@@ -98,9 +96,9 @@ router.post('/register', async (req, res) => {
   }
 
   res.send(user);
-});
+};
 
-router.delete('/:id', (req, res) => {
+exports.deleteUser =  (req, res) => {
   User.findByIdAndDelete(req.params.id)
     .then((user) => {
       if (user) {
@@ -116,11 +114,11 @@ router.delete('/:id', (req, res) => {
     .catch((err) => {
       return res.status(400).json({ success: false, error: err });
     });
-});
+};
 
 
 //! Mongo punya fungsi buat admin, contohnya dibawah ini, buat menghitung total user yang ada(rata-rata return nya cuma angka aja, barngkali butuh)
-router.get(`/get/count`, async (req, res) => {
+exports.countUsers = async (req, res) => {
   try {
     const userCount = await User.countDocuments();
 
@@ -130,9 +128,8 @@ router.get(`/get/count`, async (req, res) => {
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
-});
+};
 
 
 
 
-module.exports = router;

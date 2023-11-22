@@ -1,9 +1,7 @@
 const { Order } = require('../models/order');
 const { OrderItem } = require('../models/order-item');
-const express = require('express');
-const router = express.Router();
 
-router.get(`/`, async (req, res) => {
+exports.getOrders = async (req, res) => {
   const orderList = await Order.find()
     .populate('user', 'name')
     .sort({ dateOrdered: -1 });
@@ -12,9 +10,9 @@ router.get(`/`, async (req, res) => {
     res.status(500).json({ success: false });
   }
   res.send(orderList);
-});
+};
 
-router.get(`/:id`, async (req, res) => {
+exports.getOrderById = async (req, res) => {
   const order = await Order.findById(req.params.id)
     .populate('user', 'name') //ambil data user-name dari user id di orders
     .populate({
@@ -26,9 +24,9 @@ router.get(`/:id`, async (req, res) => {
     res.status(500).json({ success: false });
   }
   res.send(order);
-});
+};
 
-router.post('/', async (req, res) => {
+exports.createOrder = async (req, res) => {
   const orderItemsIds = Promise.all(
     req.body.orderItems.map(async (orderItem) => {
       let newOrderItem = new OrderItem({
@@ -75,10 +73,10 @@ router.post('/', async (req, res) => {
   }
 
   res.send(order);
-});
+};
 
 //Update status sesuai status pengiriman dll
-router.put('/:id', async (req, res) => {
+exports.updateOrder = async (req, res) => {
   const order = await Order.findByIdAndUpdate(
     req.params.id,
     {
@@ -93,9 +91,9 @@ router.put('/:id', async (req, res) => {
   }
 
   res.send(order);
-});
+};
 
-router.delete('/:id', (req, res) => {
+exports.deleteOrder = (req, res) => {
   Order.findByIdAndDelete(req.params.id)
     .then(async (order) => {
       if (order) {
@@ -114,9 +112,9 @@ router.delete('/:id', (req, res) => {
     .catch((err) => {
       return res.status(400).json({ success: false, error: err });
     });
-});
+};
 
-router.get('/get/totalSales', async(req, res)=> {
+exports.getTotalSales = async(req, res)=> {
   const totalSales = await Order.aggregate([
     {$group : { _id: null, totalsales : {$sum : '$totalPrice'}}}
   ])
@@ -124,9 +122,9 @@ router.get('/get/totalSales', async(req, res)=> {
     return res.status(400).send('The order sales cannot be generated')
   }
   res.send({totalsales: totalSales.pop().totalsales})
-})
+}
 
-router.get(`/get/count`, async (req, res) => {
+exports.getOrderCount = async (req, res) => {
   try {
     const orderCount = await Order.countDocuments();
 
@@ -136,10 +134,10 @@ router.get(`/get/count`, async (req, res) => {
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
-});
+};
 
 //! routing ini digunakan untuk mendapatkan orderlist berdasarkan user nya
-router.get(`/get/userorders/:userid`, async (req, res) => {
+exports.getUserOrderList = async (req, res) => {
   const UserOrderList = await Order.find({user: req.params.userid})
     .populate({
       path: 'orderItems',
@@ -151,7 +149,6 @@ router.get(`/get/userorders/:userid`, async (req, res) => {
     res.status(500).json({ success: false });
   }
   res.send(UserOrderList);
-});
+};
 
 
-module.exports = router;
