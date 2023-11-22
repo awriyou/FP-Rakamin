@@ -2,6 +2,8 @@ const { Category } = require("../models/category");
 const { Product } = require("../models/product");
 const mongoose = require("mongoose");
 const multer = require("multer");
+const path = require("path");
+const cloudinary = require('../helpers/cloudinary')
 
 const FILE_TYPE_MAP = {
   "image/png": "png",
@@ -62,7 +64,11 @@ exports.getProductById = async (req, res) => {
     }
     const fileName = req.file.filename;
     const basePath = `${req.protocol}://${req.get("host")}/public/uploads/`;
-
+    const images = await cloudinary.uploader.upload(req.file.path, {
+      upload_preset: `public/products/${req.file.originalname}`,
+      use_filename: true,
+      public_id: Date.now() + " - " + req.files[0].originalname + " - product",
+    });
     let product = new Product({
       name: req.body.name,
       description: req.body.description,
