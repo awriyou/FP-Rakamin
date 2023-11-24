@@ -41,12 +41,16 @@ router.get(`/`, async (req, res) => {
 });
 
 router.get(`/:id`, async (req, res) => {
-  const product = await Product.findById(req.params.id).populate('category'); //!populate disini saya gunakan sebagai JOIN untuk menampilkan data dari table category
-
-  if (!product) {
-    res.status(500).json({ success: false });
+  try {
+    const product = await Product.findById(req.params.id).populate('category'); //!populate disini saya gunakan sebagai JOIN untuk menampilkan data dari table category
+    if (!product) {
+      res.status(500).json({ success: false });
+    }
+    res.send(product);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Product not found.' });
   }
-  res.send(product);
 });
 
 router.post(`/`, uploadOptions.single('image'), async (req, res) => {
@@ -128,13 +132,9 @@ router.delete('/:id', (req, res) => {
   Product.findByIdAndDelete(req.params.id)
     .then((product) => {
       if (product) {
-        return res
-          .status(200)
-          .json({ success: true, message: 'The Product was deleted' });
+        return res.status(200).json({ success: true, message: 'The Product was deleted' });
       } else {
-        return res
-          .status(404)
-          .json({ success: false, message: 'Product not found' });
+        return res.status(404).json({ success: false, message: 'Product not found' });
       }
     })
     .catch((err) => {
@@ -183,39 +183,35 @@ router.get(`/get/featured/:count`, async (req, res) => {
 // });
 
 //? untuk menambahkan image lebih dari satu
-router.put(
-  '/gallery-images/:id',
-  uploadOptions.array('images', 10),
-  async (req, res) => {
-    if (!mongoose.isValidObjectId(req.params.id)) {
-      res.status(400).send('Invalid Product ID');
-    }
-    const files = req.files;
-    let imagesPaths = [];
-    const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
-
-    //? blok fungsi ini digunakan untuk menyimpan nama filepath menjadi lebih dari satu
-    if (files) {
-      files.map(file => {
-        imagesPaths.push(`${basePath}${file.filename}`);
-      });
-    }
-    //?====
-    const product = await Product.findByIdAndUpdate(
-      req.params.id,
-      {
-        images: imagesPaths,
-      },
-      {
-        new: true, //?Kalo mau yang direturn data baru
-      }
-    );
-    if (!product) {
-      return res.status(404).send('The Product cannot be updated');
-    }
-
-    res.send(product);
+router.put('/gallery-images/:id', uploadOptions.array('images', 10), async (req, res) => {
+  if (!mongoose.isValidObjectId(req.params.id)) {
+    res.status(400).send('Invalid Product ID');
   }
-);
+  const files = req.files;
+  let imagesPaths = [];
+  const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
+
+  //? blok fungsi ini digunakan untuk menyimpan nama filepath menjadi lebih dari satu
+  if (files) {
+    files.map((file) => {
+      imagesPaths.push(`${basePath}${file.filename}`);
+    });
+  }
+  //?====
+  const product = await Product.findByIdAndUpdate(
+    req.params.id,
+    {
+      images: imagesPaths,
+    },
+    {
+      new: true, //?Kalo mau yang direturn data baru
+    }
+  );
+  if (!product) {
+    return res.status(404).send('The Product cannot be updated');
+  }
+
+  res.send(product);
+});
 
 module.exports = router;

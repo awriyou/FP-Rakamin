@@ -10,7 +10,7 @@ const Navigation = () => {
         <div className="flex items-center justify-between mx-[60px] py-4">
           <div className="flex justify-start">
             <div className="text-[12px]">
-              <Link className="nav-link text-main relative" href="/home">
+              <Link className="nav-link text-main relative" href="/">
                 HOME
               </Link>
               <Link
