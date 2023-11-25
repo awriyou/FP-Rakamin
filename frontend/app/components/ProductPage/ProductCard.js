@@ -1,7 +1,8 @@
 // components/ProductCard.js
 
 const ProductCard = ({ product }) => {
-  const categoryImagePath = `/image/logo/${product.category.toLowerCase()}.png`;
+  const brandImagePath = product.brand ? `/images/logo/${product.brand.toLowerCase()}.png` : '';
+  const productId = product.id || '';
 
   return (
     <div className="rounded-lg overflow-hidden bg-white border border-gray-300">
@@ -17,8 +18,8 @@ const ProductCard = ({ product }) => {
           <p className="text-sm font-raleway font-light text-gray-500 ml-auto">{product.sold} units sold</p>
         </div>
         <img
-          src={categoryImagePath}
-          alt={product.category}
+          src={brandImagePath}
+          alt={product.brand}
           className="w-24 object-contain ml-auto"
         />
       </div>
