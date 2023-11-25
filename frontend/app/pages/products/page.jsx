@@ -1,9 +1,9 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import ProductCard from '../../components/ProductList/ProductCard';
-import Banner from '../../components/ProductList/Banner';
-import CategoryFilter from '../../components/ProductList/CategoryFilter';
-import ButtonGroup from '../../components/ProductList/ButtonGroup';
+import ProductCard from '../../components/ProductPage/ProductCard';
+import Banner from '../../components/ProductPage/Banner';
+import BrandFilter from '../../components/ProductPage/BrandFilter';
+import ButtonGroup from '../../components/ProductPage/ButtonGroup';
 import axios from 'axios';
 
 
@@ -12,7 +12,7 @@ const bannerImage = '/images/ProductPage/banner.jpeg';
 const ProductPage = () => {
   // State untuk menyimpan produk yang akan ditampilkan
   const [sortedProducts, setSortedProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedBrand, setSelectedBrand] = useState(null);
   // State untuk menyimpan urutan sort
   const [sortOrder, setSortOrder] = useState(null);
 
@@ -33,24 +33,28 @@ const ProductPage = () => {
   }; // Reset ke halaman pertama ketika urutan diubah
 
   // Fungsi untuk mengatur kategori terpilih dan memfilter produk
-  const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
+  const handleBrandClick = (brand) => {
+    setSelectedBrand(brand);
     setCurrentPage(1); // Reset ke halaman pertama ketika kategori diubah
   };
 
   // Menghitung produk yang akan ditampilkan pada halaman saat ini
-  const currentProducts = sortedProducts.slice((currentPage - 1) * productsPerPage, currentPage * productsPerPage);
+  const currentProducts = sortedProducts
+  .filter(product => !selectedBrand || (selectedBrand === 'All' || product.brand === selectedBrand))
+  .slice((currentPage - 1) * productsPerPage, currentPage * productsPerPage);
 
   // Menghitung jumlah total halaman yang diperlukan
   const totalPages = Math.max(Math.ceil(sortedProducts.length / productsPerPage), 1);
 
   useEffect(() => {
     const fetchData = async () => {
-      try {  
+      try {
+
+
         // Menggunakan Axios untuk mengambil data dari API produk
         const productsResponse = await axios.get('http://localhost:3000/api/v1/products');
         const productsData = productsResponse.data;
-  
+
         // Mengatur data produk dan kategori ke state
         setSortedProducts(productsData);
         setCategories(categoriesData);
@@ -63,7 +67,10 @@ const ProductPage = () => {
   }, []);
 
   return (
-    <div className="md:mx-auto">
+    
+    <div className="md:mx-auto" style={{ backgroundColor: '#F5F5F5' }}>
+
+      
       {/* Banner Iklan */}
       <Banner
         imageUrl={bannerImage}
@@ -74,9 +81,10 @@ const ProductPage = () => {
       />
       {/* Banner Iklan */}
 
-      {/* Filter Categories */}
-      <CategoryFilter onCategoryClick={handleCategoryClick} />
-      {/* Filter Categories */}
+      {/* Filter Brands */}
+{/* Filter Brands */}
+<BrandFilter onBrandClick={handleBrandClick} selectedBrand={selectedBrand} />
+      {/* Filter Brands */}     
 
       <div className="mx-4 md:mx-auto">
         {/* Dropdown Sort Button */}
@@ -121,12 +129,3 @@ const ProductPage = () => {
 
 export default ProductPage;
 
-// export default async function ProductPage() {
-//   return (
-//     <>
-//       <h1>Product 1</h1>
-//       <h1>Product 2</h1>
-//       <h1>Product 3</h1>
-//     </>
-//   );
-// }
