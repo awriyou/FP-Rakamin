@@ -17,7 +17,7 @@ export default function Page({ params }) {
   const router = useRouter();
 
   function handleCancel() {
-    router.push(`/profile/${params.userId}`);
+    router.push(`/user/profile/${params.userId}`);
   }
 
   async function handleSave(e) {
@@ -34,7 +34,7 @@ export default function Page({ params }) {
 
     try {
       const response = await axios.put(
-        `http://localhost:8081/api/v1/users/${params.userId}`,
+        `http://localhost:3000/api/v1/users/${params.userId}`,
         {
           name,
           email,
@@ -57,7 +57,7 @@ export default function Page({ params }) {
       setProvince("");
 
       if (response.status === 200) {
-        router.push(`/profile/${params.userId}`);
+        router.push(`/user/profile/${params.userId}`);
       } else {
         alert("Failed to update user.");
       }

@@ -10,7 +10,10 @@ export default function Page({ params }) {
   const router = useRouter();
 
   function handleClick() {
-    router.push(`/profile/${params.userId}/edit/profile`);
+    router.push(`/user/profile/${params.userId}/edit/profile`);
+  }
+  function handleBack() {
+    router.push(`/`);
   }
 
   function handleEditPassword() {
@@ -25,7 +28,7 @@ export default function Page({ params }) {
     const fetchUser = async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:8081/api/v1/users/${params.userId}`
+          `http://localhost:3000/api/v1/users/${params.userId}`
         );
         setUser(data);
       } catch (error) {
@@ -45,46 +48,59 @@ export default function Page({ params }) {
   ];
 
   return (
-    <div className="container mx-auto p-4 w-3/4 md:w-1/2 lg:w-4/5 my-10 space-y-4chc bg-white rounded shadow">
-      <form className="flex flex-col md:flex-row items-start md:items-stretch justify-start md:justify-between space-y-4 md:space-y-0">
+    <div className="flex items-center justify-center min-h-screen font-poppins">
+      <form className="bg-white p-8 rounded shadow-md w-full max-w-md mt-10 mb-10 font-poppins ">
         {/* Left Column - Data and Buttons */}
-          <div className="space-y-4 p-4 bg-white w-full md:w-1/3 lg:w-1/4 px-8 py-6 lg:px-12 lg:py-8 sm:px-8 sm:py-6">
-            <h1 className="text-3xl font-bold text-gray-700 tracking-wide ">Profile</h1>
+          <div className="text-center mb-3">
+            <h1 className="text-2xl font-bold text-blue-500" style={{ color: '#488BA8' }}>Profile</h1>
+            <hr className="my-2 border-t border-gray-300" />
           </div>
-        <div className="space-y-4 p-4 bg-white w-full md:w-2/3 lg:w-3/4 px-8 py-6 lg:px-12 lg:py-8 sm:px-8 sm:py-6 mx-auto4">
+        <div className="mb-">
           <div className="space-y-4">
           <div>
-            <h5 className="font-bold text-md  text-gray-700 tracking-wide mb-4 sm:mb-6 lg:mb-8 sm:text-xl lg:text-2xl ">Name:</h5>
-            <p className="text-gray-500 sm:text-lg lg:text-xl">{user.name}</p>
+            <h5 className="block text-sm font-medium text-gray-600" style={{ color: '#488BA8' }}>Name:</h5>
+            <p className="mt-1 p-2 w-full  rounded-md">{user.name}</p>
           </div>
           <div>
-            <h5 className="font-bold text-md  text-gray-700 tracking-wide mb-4 sm:mb-6 lg:mb-8 sm:text-xl lg:text-2xl ">Email:</h5>
-            <p className="text-gray-500 sm:text-lg lg:text-xl">{user.email}</p>
+            <h5 className="block text-sm font-medium text-gray-600" style={{ color: '#488BA8' }}>Email:</h5>
+            <p className="mt-1 p-2 w-full  rounded-md">{user.email}</p>
           </div>
           <div>
-            <h5 className="font-bold text-md  text-gray-700 tracking-wide mb-4 sm:mb-6 lg:mb-8 sm:text-xl lg:text-2xl ">Phone:</h5>
-            <p className="text-gray-500 sm:text-lg lg:text-xl">{user.phone}</p>
+            <h5 className="block text-sm font-medium text-gray-600" style={{ color: '#488BA8' }}>Phone:</h5>
+            <p className="mt-1 p-2 w-full  rounded-md">{user.phone}</p>
           </div>
           <div>
-            <h5 className="font-bold text-md  text-gray-700 tracking-wide mb-4 sm:mb-6 lg:mb-8 sm:text-xl lg:text-2xl ">Address:</h5>
-            <p className="text-gray-500 sm:text-lg lg:text-xl">{user.address}</p>
+            <h5 className="block text-sm font-medium text-gray-600" style={{ color: '#488BA8' }}>Address:</h5>
+            <p className="mt-1 p-2 w-full  rounded-md">{user.address}</p>
           </div>
           <div>
-            <h5 className="font-bold text-md  text-gray-700 tracking-wide mb-4 sm:mb-6 lg:mb-8 sm:text-xl lg:text-2xl ">Postal Code:</h5>
-            <p className="text-gray-500 sm:text-lg lg:text-xl">{user.postalCode}</p>
+            <h5 className="block text-sm font-medium text-gray-600" style={{ color: '#488BA8' }}>Postal Code:</h5>
+            <p className="mt-1 p-2 w-full  rounded-md">{user.postalCode}</p>
           </div>
           <div>
-            <h5 className="font-bold text-md  text-gray-700 tracking-wide mb-4 sm:mb-6 lg:mb-8 sm:text-xl lg:text-2xl ">City:</h5>
-            <p className="text-gray-500 sm:text-lg lg:text-xl">{user.city}</p>
+            <h5 className="block text-sm font-medium text-gray-600" style={{ color: '#488BA8' }}>City:</h5>
+            <p className="mt-1 p-2 w-full  rounded-md">{user.city}</p>
           </div>
+          <div>
+            <h5 className="block text-sm font-medium text-gray-600" style={{ color: '#488BA8' }}>Province:</h5>
+            <p className="mt-1 p-2 w-full  rounded-md">{user.province}</p>
+          </div>
+          
           </div>
           <div className="space-x-2 flex justify-end">
             <button
               onClick={handleClick}
               type="button"
-              className="bg-blue-500 text-white px-4 py-2 rounded"
+              className="bg-blue-500 text-white px-2 py-1 rounded"
             >
               Edit Profile
+            </button>
+            <button
+              onClick={handleBack}
+              type="button"
+              className="bg-yellow-500 text-white px-2 py-1 rounded"
+            >
+              Back
             </button>
             {/* <button
               onClick={handleEditPassword}
@@ -97,7 +113,7 @@ export default function Page({ params }) {
         </div>
   
         {/* Right Column - Photo */}
-        <div className="text-center w-full md:w-1/3 lg:w-1/4 p-4">
+        {/* <div className="text-center w-full md:w-1/3 lg:w-1/4 p-4">
           {user.photo && (
             <div
               onClick={handleEditPhoto}
@@ -110,7 +126,7 @@ export default function Page({ params }) {
               />
             </div>
           )}
-        </div>
+        </div> */}
       </form>
     </div>
   );
