@@ -9,7 +9,7 @@ const BrandFilter = ({ onBrandClick, selectedBrand }) => {
     { name: 'Hp', image: '/images/ProductPage/Logo Product/hp.png' },
     { name: 'Lenovo', image: '/images/ProductPage/Logo Product/lenovo.png' },
     { name: 'Acer', image: '/images/ProductPage/Logo Product/acer.png' },
-    { name: 'Other Brand', image: '/images/ProductPage/Logo Product/other.png' },
+    { name: 'otherbrand', image: '/images/ProductPage/Logo Product/otherbrand.png' },
   ]);
 
   return (

@@ -1,14 +1,15 @@
 // components/ProductCard.js
+import Link from 'next/link';
 
 const ProductCard = ({ product }) => {
-  const brandImagePath = product.brand ? `/images/logo/${product.brand.toLowerCase()}.png` : '';
+  const brandImagePath = product.brand ? `/images/ProductPage/Logo Product/${product.brand}.png` : '';
   const productId = product.id || '';
 
   return (
-    <div className="rounded-lg overflow-hidden bg-white border border-gray-300">
-
-      <img src={product.image} alt={product.name} className="w-full h-390 object-cover" />
-
+    <div className='rounded-lg overflow-hidden bg-white border border-gray-300'>
+      <Link href={`/pages/products/${productId}`}>
+        <img src={product.image} alt={product.name} className='w-full h-390 object-cover' />
+      </Link>
       <div className="p-4">
         <div className="border-t-2 border-gray-200 mt-4"></div>
         <h3 className="text-xl font-raleway font-semibold text-gray-800 mt-4">{product.name}</h3>

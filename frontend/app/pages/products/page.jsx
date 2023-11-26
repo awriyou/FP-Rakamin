@@ -6,7 +6,6 @@ import BrandFilter from '../../components/ProductPage/BrandFilter';
 import ButtonGroup from '../../components/ProductPage/ButtonGroup';
 import axios from 'axios';
 
-
 const bannerImage = '/images/ProductPage/banner.jpeg';
 
 const ProductPage = () => {
@@ -20,7 +19,7 @@ const ProductPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   // Jumlah produk yang ditampilkan per halaman
-  const productsPerPage = 8;
+  const productsPerPage = 4;
 
   // Fungsi untuk menyortir produk berdasarkan harga
   const sortByPrice = (ascending) => {
@@ -50,7 +49,6 @@ const ProductPage = () => {
     const fetchData = async () => {
       try {
 
-
         // Menggunakan Axios untuk mengambil data dari API produk
         const productsResponse = await axios.get('http://localhost:3000/api/v1/products');
         const productsData = productsResponse.data;
@@ -70,7 +68,6 @@ const ProductPage = () => {
 
     <div className="md:mx-auto" style={{ backgroundColor: '#F5F5F5' }}>
 
-
       {/* Banner Iklan */}
       <Banner
         imageUrl={bannerImage}
@@ -81,7 +78,6 @@ const ProductPage = () => {
       />
       {/* Banner Iklan */}
 
-      {/* Filter Brands */}
       {/* Filter Brands */}
       <BrandFilter onBrandClick={handleBrandClick} selectedBrand={selectedBrand} />
       {/* Filter Brands */}

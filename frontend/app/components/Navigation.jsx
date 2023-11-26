@@ -21,10 +21,10 @@ const Navigation = () => {
               </Link>
             </div>
           </div>
-          <div className='flex justify-center'>
-            <div className='text-[12px]'>
-              <Link className='nav-link text-main relative' href='/home'>
-                LOGO
+          <div className="flex justify-center">
+            <div className="text-[12px]">
+              <Link className="nav-link text-main relative" href="/home">
+                <img src="/images/LogoPure.png" alt="Logo" className="w-full h-16" />
               </Link>
             </div>
           </div>
