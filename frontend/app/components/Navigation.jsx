@@ -2,43 +2,51 @@ import React from 'react';
 import Link from 'next/link';
 import ListPromotion from './ListPromotion';
 // import { BsBag } from 'react-icons/bs';
+// import logo from '../../public/images/logo 1.png'
 
 const Navigation = () => {
+  // const logo = ['images/logo1.png']
   return (
-    <header className='sticky top-0 z-40'>
-      <div className='bg-white drop-shadow-md hidden lg:block'>
-        <div className='flex items-center justify-between mx-[60px] py-4'>
-          <div className='flex justify-start'>
-            <div className='text-[12px]'>
-              <Link className='nav-link text-main relative' href='/'>
+    <header className="sticky top-0 z-40">
+      <div className="bg-white drop-shadow-md hidden lg:block">
+        <div className="flex items-center justify-between mx-[60px] py-4">
+          <div className="flex justify-start">
+            <div className="text-[12px]">
+              <Link className="nav-link text-main relative" href="/">
                 HOME
               </Link>
-              <Link className='nav-link text-main mx-8 relative' href='/pages/products'>
+              <Link
+                className="nav-link text-main mx-8 relative"
+                href="/pages/products"
+              >
                 PRODUCT
               </Link>
-              <Link className='nav-link text-main relative' href='#categories'>
+              <Link className="nav-link text-main relative" href="#categories">
                 CATEGORIES
               </Link>
             </div>
           </div>
-          <div className='flex justify-center'>
-            <div className='text-[12px]'>
-              <Link className='nav-link text-main relative' href='/home'>
-                LOGO
+          <div className="flex justify-center">
+            <div className="text-[12px]">
+              <Link className="nav-link text-main relative" href="/">
+                <img src="/images/logo.png" alt="logo" className='w-10 h-10'/>
               </Link>
             </div>
           </div>
-          <div className='flex justify-end'>
-            <div className='text-[12px]'>
-              <Link className='nav-link text-main mx-8 relative' href='/cart'></Link>
-              <Link className='nav-link text-main mx-8 relative' href='/cart'>
+          <div className="flex justify-end">
+            <div className="text-[12px]">
+              <Link
+                className="nav-link text-main mx-8 relative"
+                href="/cart"
+              ></Link>
+              <Link className="nav-link text-main mx-8 relative" href="/cart">
                 CART
               </Link>
-              <Link className='nav-link text-main relative' href='/user/login'>
+              <Link className="nav-link text-main relative" href="/user/login">
                 LOG IN
               </Link>
-              <span className='text-light mx-3'>|</span>
-              <Link className='nav-link text-main relative' href='/user/signup'>
+              <span className="text-light mx-3">|</span>
+              <Link className="nav-link text-main relative" href="/user/signup">
                 SIGN UP
               </Link>
             </div>

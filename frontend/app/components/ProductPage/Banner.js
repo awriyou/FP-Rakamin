@@ -5,7 +5,7 @@ const Banner = ({ imageUrl, altText }) => (
 
     <div className="relative">
       <img
-        className="w-full h-48 md:h-1/2 object-cover sm:w-full"
+        className="w-full sm:w-full  md:h-1/2 object-cover "
         src={imageUrl}
         alt={altText}
       />

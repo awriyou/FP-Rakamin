@@ -19,7 +19,13 @@ export default function ProductDetail(context) {
 
     getProductById();
   }, []);
-
+  //!====
+  const formatter = new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
   return (
     <div className='flex p-4'>
       {/* Left side with the image */}
@@ -33,7 +39,7 @@ export default function ProductDetail(context) {
         <div className='text-gray-600 mb-4'>
           <p>Brand: {productDetails.brand}</p>
           <p>Description: {productDetails.description}</p>
-          <p>Price: ${productDetails.price}</p>
+          <p>Price: {formatter.format(productDetails.price)}</p>
           <p>Stock: {productDetails.countInStock}</p>
         </div>
         <div className='flex content-center'>
