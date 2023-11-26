@@ -40,8 +40,8 @@ const ProductPage = () => {
 
   // Menghitung produk yang akan ditampilkan pada halaman saat ini
   const currentProducts = sortedProducts
-  .filter(product => !selectedBrand || (selectedBrand === 'All' || product.brand === selectedBrand))
-  .slice((currentPage - 1) * productsPerPage, currentPage * productsPerPage);
+    .filter(product => !selectedBrand || (selectedBrand === 'All' || product.brand === selectedBrand))
+    .slice((currentPage - 1) * productsPerPage, currentPage * productsPerPage);
 
   // Menghitung jumlah total halaman yang diperlukan
   const totalPages = Math.max(Math.ceil(sortedProducts.length / productsPerPage), 1);
@@ -67,10 +67,10 @@ const ProductPage = () => {
   }, []);
 
   return (
-    
+
     <div className="md:mx-auto" style={{ backgroundColor: '#F5F5F5' }}>
 
-      
+
       {/* Banner Iklan */}
       <Banner
         imageUrl={bannerImage}
@@ -82,9 +82,9 @@ const ProductPage = () => {
       {/* Banner Iklan */}
 
       {/* Filter Brands */}
-{/* Filter Brands */}
-<BrandFilter onBrandClick={handleBrandClick} selectedBrand={selectedBrand} />
-      {/* Filter Brands */}     
+      {/* Filter Brands */}
+      <BrandFilter onBrandClick={handleBrandClick} selectedBrand={selectedBrand} />
+      {/* Filter Brands */}
 
       <div className="mx-4 md:mx-auto">
         {/* Dropdown Sort Button */}
