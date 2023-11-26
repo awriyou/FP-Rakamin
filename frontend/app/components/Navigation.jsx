@@ -34,11 +34,11 @@ const Navigation = () => {
               <Link className='nav-link text-main mx-8 relative' href='/cart'>
                 CART
               </Link>
-              <Link className='nav-link text-main relative' href='/login'>
+              <Link className='nav-link text-main relative' href='/user/login'>
                 LOG IN
               </Link>
               <span className='text-light mx-3'>|</span>
-              <Link className='nav-link text-main relative' href='/signup'>
+              <Link className='nav-link text-main relative' href='/user/signup'>
                 SIGN UP
               </Link>
             </div>
