@@ -86,13 +86,13 @@ export default function Page({ params }) {
             >
               Edit Profile
             </button>
-            <button
+            {/* <button
               onClick={handleEditPassword}
               type="button"
               className="bg-pink-500 text-white px-4 py-2 rounded"
             >
               Edit Password
-            </button>
+            </button> */}
           </div>
         </div>
   
