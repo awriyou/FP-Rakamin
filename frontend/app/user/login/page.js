@@ -60,7 +60,7 @@ const LoginPage = () => {
           <form onSubmit={handleLogin}>
             {/* Username/Email */}
             <div className="mb-4 font-poppins">
-              <label htmlFor="username" className="block text-sm font-medium text-gray-600" style={{ color: '#488BA8' }}>Username or Email</label>
+              <label htmlFor="username" className="block text-sm font-medium text-gray-600" style={{ color: '#488BA8' }}>Email</label>
               <input
                 type="text"
                 id="username"

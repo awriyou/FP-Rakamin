@@ -154,7 +154,7 @@ router.post("/login", async (req, res) => {
         expiresIn: "1d",
       }
     );
-    res.status(200).send({ user: user.username, token: token });
+    res.status(200).send({ user: user.email, token: token });
   } else {
     res.status(400).send("password is wrong");
   }
@@ -177,7 +177,6 @@ router.post("/register", async (req, res) => {
     postalCode: req.body.postalCode,
     city: req.body.city,
     province: req.body.province,
-    username: req.body.username
   });
 
   user = await user.save();

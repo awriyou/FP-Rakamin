@@ -8,7 +8,6 @@ const SignupPage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [username, setUsername] = useState('');
   
   
 
@@ -40,7 +39,6 @@ const SignupPage = () => {
         postalCode: 12345,
         city: "Kota Default",
         province: "Provinsi Default",
-        username: username
       })
     });
 
@@ -76,28 +74,14 @@ const SignupPage = () => {
         <form onSubmit={handleSubmit} >
           {/* Nama Lengkap */}
           <div className="mb-2">
-            <label htmlFor="fullName" className="block text-sm font-medium text-gray-600" style={{ color: '#488BA8' }}>Full Name</label>
+            <label htmlFor="fullName" className="block text-sm font-medium text-gray-600" style={{ color: '#488BA8' }}>Name</label>
             <input
               type="text"
               id="fullName"
               name="fullName"
               className="mt-1 p-2 w-full border rounded-md"
-              placeholder="Enter your full name"
+              placeholder="Enter your name"
               onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-
-
-          {/* Username */}
-          <div className="mb-4">
-            <label htmlFor="username" className="block text-sm font-medium text-gray-600" style={{ color: '#488BA8' }}>Username</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              className="mt-1 p-2 w-full border rounded-md"
-              placeholder="Enter your username"
-              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
 
