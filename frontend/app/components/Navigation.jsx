@@ -1,8 +1,8 @@
+// Import modul dan komponen yang diperlukan
 "use client";
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import ListPromotion from './ListPromotion';
-// import { BsBag } from 'react-icons/bs';
 
 const Navigation = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -11,7 +11,7 @@ const Navigation = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
-  
+
     if (user) {
       const email = user.replace(/["']/g, ''); // Menghapus karakter '"' dan "'"
       setIsLoggedIn(!!token);
@@ -21,10 +21,10 @@ const Navigation = () => {
       setUserEmail(null);
     }
   }, []);
-  
+
   const handleLogout = () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('user'); // Menggunakan kunci 'user' yang konsisten
+    localStorage.removeItem('user');
     setIsLoggedIn(false);
     setUserEmail(null);
   };
@@ -47,40 +47,40 @@ const Navigation = () => {
             </div>
           </div>
           <div className="flex justify-center">
-          <div className="text-[12px]">
-            <Link className="nav-link text-main relative" href="/">
-              <img src="/images/logo.png" alt="logo" className='w-10 h-10'/>
-            </Link>
+            <div className="text-[12px]">
+              <Link className="nav-link text-main relative" href="/">
+                <img src="/images/logo.png" alt="logo" className='w-10 h-10'/>
+              </Link>
+            </div>
           </div>
-        </div>
           <div className='flex justify-end'>
             <div className='text-[12px]'>
-              <Link className='nav-link text-main mx-8 relative' href='/cart'></Link>
-              <Link className='nav-link text-main mx-8 relative' href='/cart'>
-                CART
-              </Link>
+              <Link className='nav-link text-main mx-auto relative' href='/cart'></Link>
               {isLoggedIn ? (
                 <>
-                  
-                  <Link className='nav-link text-main mx-8 relative' href='/'>
-                    <span>{userEmail}</span>
+                  <Link className='nav-link text-main mx-8 relative' href='/cart'>
+                    CART
                   </Link>
-                  <button className='nav-link text-main relative' onClick={handleLogout}>
+                  <button className='nav-link text-main mr-3 relative' onClick={handleLogout}>
                     LOG OUT
                   </button>
+                  <Link className='nav-link text-main ml-3 relative' href='/'>
+                    <span>{userEmail}</span>
+                  </Link>
                 </>
               ) : (
-                <Link className='nav-link text-main relative' href='/user/login'>
-                  LOG IN
-                </Link>
+                <>
+                  <Link className='nav-link text-main mx-8 relative' href='/cart'>
+                    CART
+                  </Link>
+                  <Link className='nav-link text-main relative' href='/user/login'>
+                    LOG IN
+                  </Link>
+                  <Link className='nav-link text-main ml-3 relative' href='/user/signup'>
+                    SIGN UP
+                  </Link>
+                </>
               )}
-              {/* <Link className='nav-link text-main relative' href='/user/login'>
-                LOG IN
-              </Link> */}
-              <span className='text-light mx-3'>|</span>
-              <Link className='nav-link text-main relative' href='/user/signup'>
-                SIGN UP
-              </Link>
             </div>
           </div>
         </div>
