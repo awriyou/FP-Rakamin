@@ -154,13 +154,19 @@ router.post("/login", async (req, res) => {
         expiresIn: "1d",
       }
     );
-    res.status(200).send({ user: user.email, token: token });
+    res.status(200).send({ user: user.username, token: token });
   } else {
     res.status(400).send("password is wrong");
   }
 });
 
 router.post("/register", async (req, res) => {
+  const existingUser = await User.findOne({ email: req.body.email });
+
+  if (existingUser) {
+    return res.status(400).send({error: "User with that email already exists"});
+  }
+
   let user = new User({
     name: req.body.name,
     email: req.body.email,
@@ -171,7 +177,9 @@ router.post("/register", async (req, res) => {
     postalCode: req.body.postalCode,
     city: req.body.city,
     province: req.body.province,
+    username: req.body.username
   });
+
   user = await user.save();
 
   if (!user) {

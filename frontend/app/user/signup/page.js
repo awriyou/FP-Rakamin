@@ -1,7 +1,64 @@
-import React from 'react';
+"use client";
+import React, { useState } from 'react';
 import Navbar from '../../components/Navigation';
 
 const SignupPage = () => {
+  const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [username, setUsername] = useState('');
+  
+  
+
+
+  const handleSubmit = async (event) => {
+    if (password != passwordConfirmation) {
+      alert("Password not match");
+  
+      // stop the function from running further
+  
+      return;
+    }
+    event.preventDefault();
+
+    console.log (name);
+
+    const response = await fetch('http://localhost:3000/api/v1/users/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        password: password,
+        phone: phone,
+        isAdmin: false,
+        address: "Alamat Default",
+        postalCode: 12345,
+        city: "Kota Default",
+        province: "Provinsi Default",
+        username: username
+      })
+    });
+
+    const data = await response.json();
+
+    if (data.error) {
+      alert("Signup failed, user already exists");
+    }
+
+    if (data.status == 400) {
+      alert("Signup failed");
+    }
+    else {
+      alert("Signup success");
+      // console.log (data);
+      window.location.href = '/user/login';
+    }
+  }
   return (
    <div> 
     <div className="flex items-center justify-center min-h-screen font-poppins">
@@ -16,7 +73,7 @@ const SignupPage = () => {
         </div>
 
         {/* Form */}
-        <form>
+        <form onSubmit={handleSubmit} >
           {/* Nama Lengkap */}
           <div className="mb-2">
             <label htmlFor="fullName" className="block text-sm font-medium text-gray-600" style={{ color: '#488BA8' }}>Full Name</label>
@@ -26,6 +83,7 @@ const SignupPage = () => {
               name="fullName"
               className="mt-1 p-2 w-full border rounded-md"
               placeholder="Enter your full name"
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
 
@@ -39,6 +97,7 @@ const SignupPage = () => {
               name="username"
               className="mt-1 p-2 w-full border rounded-md"
               placeholder="Enter your username"
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
 
@@ -51,6 +110,7 @@ const SignupPage = () => {
               name="email"
               className="mt-1 p-2 w-full border rounded-md"
               placeholder="Enter your email"
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
@@ -63,6 +123,7 @@ const SignupPage = () => {
               name="phone"
               className="mt-1 p-2 w-full border rounded-md"
               placeholder="Enter your phone number"
+              onChange={(e) => setPhone(e.target.value)}
             />
           </div>
 
@@ -75,6 +136,7 @@ const SignupPage = () => {
               name="password"
               className="mt-1 p-2 w-full border rounded-md"
               placeholder="Enter your password"
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
@@ -87,11 +149,13 @@ const SignupPage = () => {
               name="confirmPassword"
               className="mt-1 p-2 w-full border rounded-md"
               placeholder="Confirm your password"
+              onChange={(e) => setPasswordConfirmation(e.target.value)}
             />
           </div>
 
-{/* Signup Button */}
-<button
+          {/* Signup Button */}
+          <button
+
             type="submit"
             className="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 font-bold"
             style={{ backgroundColor: '#488BA8' }}

@@ -38,6 +38,10 @@ const userSchema = mongoose.Schema({
     type: String,
     default: ''
   },
+  username: {
+    type: String,
+    default: ''
+  },
 });
 
 userSchema.virtual('id').get(function () {
