@@ -154,7 +154,7 @@ router.post("/login", async (req, res) => {
         expiresIn: "1d",
       }
     );
-    res.status(200).send({ user: user.username, token: token });
+    res.status(200).send({ user: user.name, token: token, isAdmin: user.isAdmin });
   } else {
     res.status(400).send("password is wrong");
   }

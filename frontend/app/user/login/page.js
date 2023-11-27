@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react';
-import Navbar from '../../components/Navigation'; 
+// import Router from 'next/router';
+// import Navbar from '../../components/Navigation'; 
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -16,19 +17,26 @@ const LoginPage = () => {
       },
       body: JSON.stringify({ email: username, password: password })
     });
+    
+    const data = await response.json();
+    console.log(data)
+
+    // const data = await response.json();
 
     try {
-      const { user, token } = await response.json();
+      const { user, token, isAdmin } = data;
       if (user && token) {
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('token', token);
-        window.location.href = '/';    //pindah ke lokasi dashboard user
+        localStorage.setItem('isAdmin', isAdmin);
+        window.location.href = '/';
       } else {
         alert('Login Failed');
       }
-    } catch (error) {
-      alert('Login failed');
+    } catch (err) {
+      console.log(err.message)
     }
+
 
     
 
