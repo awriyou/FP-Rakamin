@@ -177,7 +177,6 @@ router.post("/register", async (req, res) => {
     postalCode: req.body.postalCode,
     city: req.body.city,
     province: req.body.province,
-    username: req.body.username
   });
 
   user = await user.save();

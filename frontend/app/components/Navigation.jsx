@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import ListPromotion from './ListPromotion';
-// import { BsBag } from 'react-icons/bs';
 
 const Navigation = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -27,7 +26,7 @@ const Navigation = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('user'); // Menggunakan kunci 'user' yang konsisten
+    localStorage.removeItem('user');
     setIsLoggedIn(false);
     setUserEmail(null);
   };
