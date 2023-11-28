@@ -61,16 +61,16 @@ const Navigation = () => {
           <div className="flex justify-end">
             <div className="text-[12px] flex items-center">
               <Link
-                className="nav-link text-main mx-8 relative"
+                className="nav-link text-main ml-5 relative"
                 href="/cart"
               ></Link>
-              <Link className="nav-link text-main mx-8 relative" href="/cart">
+              <Link className="nav-link text-main mx-auto mr-5 relative" href="/cart">
                 CART
               </Link>
               {isLoggedIn ? (
                 <>
                   <button
-                    className="nav-link text-main relative"
+                    className="nav-link text-main relative mx-auto"
                     onClick={handleLogout}
                   >
                     LOG OUT
@@ -78,7 +78,7 @@ const Navigation = () => {
                   {isAdmin ? (
                     <Link
                       href="/admin/"
-                      className="font-bold nav-link ml-8 text-slate-200 relative px-3 py-2 bg-blue-100 rounded-xl"
+                      className="font-bold nav-link ml-3 text-slate-200 relative px-3 py-2 bg-blue-100 rounded-xl"
                     >
                       ADMIN DASH
                     </Link>
@@ -89,7 +89,7 @@ const Navigation = () => {
                   )}
 
                   <Link
-                    className="nav-link text-main ml-4 relative font-bold flex items-center gap-1"
+                    className="nav-link text-main ml-3 relative font-bold flex items-center gap-1"
                     href="/"
                   >
                     <span className="">{userEmail}</span>
@@ -99,14 +99,14 @@ const Navigation = () => {
               ) : (
                 <>
                   <Link
-                    className="nav-link text-main relative"
+                    className="nav-link text-main relative mr-3 ml-2"
                     href="/user/login"
                   >
                     LOG IN
                   </Link>
                   <span className="text-light mx-3">|</span>
                   <Link
-                    className="nav-link text-main relative"
+                    className="nav-link text-main relative mr-5 ml-2"
                     href="/user/signup"
                   >
                     SIGN UP
