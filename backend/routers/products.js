@@ -90,18 +90,13 @@ router.post(`/`, uploadOptions.single('image'), async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-  //?Blok ini digunakan untuk memvalidasi id, kalo gunain mongo tanpa pakai promise
   if (!mongoose.isValidObjectId(req.params.id)) {
-    res.status(400).send('Invalid Product ID');
+    return res.status(400).send('Invalid Product Id');
   }
-  //?=====
-  //?blok ini untuk mastiin ada category nya apa nggak
   const category = await Category.findById(req.body.category);
-  if (!category) {
-    return res.status(400).send('Invalid Category');
-  }
-  //?===
-
+  console.log(category);
+  if (!category) return res.status(400).send('Invalid Category');
+  
   const product = await Product.findByIdAndUpdate(
     req.params.id,
     {
@@ -117,13 +112,10 @@ router.put('/:id', async (req, res) => {
       numReviews: req.body.numReviews,
       isFeatured: req.body.isFeatured,
     },
-    {
-      new: true, //?Kalo mau yang direturn data baru
-    }
+    { new: true }
   );
-  if (!product) {
-    return res.status(404).send('The Product cannot be updated');
-  }
+
+  if (!product) return res.status(500).send('the product cannot be updated!');
 
   res.send(product);
 });
@@ -132,9 +124,13 @@ router.delete('/:id', (req, res) => {
   Product.findByIdAndDelete(req.params.id)
     .then((product) => {
       if (product) {
-        return res.status(200).json({ success: true, message: 'The Product was deleted' });
+        return res
+          .status(200)
+          .json({ success: true, message: 'The Product was deleted' });
       } else {
-        return res.status(404).json({ success: false, message: 'Product not found' });
+        return res
+          .status(404)
+          .json({ success: false, message: 'Product not found' });
       }
     })
     .catch((err) => {
@@ -183,35 +179,39 @@ router.get(`/get/featured/:count`, async (req, res) => {
 // });
 
 //? untuk menambahkan image lebih dari satu
-router.put('/gallery-images/:id', uploadOptions.array('images', 10), async (req, res) => {
-  if (!mongoose.isValidObjectId(req.params.id)) {
-    res.status(400).send('Invalid Product ID');
-  }
-  const files = req.files;
-  let imagesPaths = [];
-  const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
-
-  //? blok fungsi ini digunakan untuk menyimpan nama filepath menjadi lebih dari satu
-  if (files) {
-    files.map((file) => {
-      imagesPaths.push(`${basePath}${file.filename}`);
-    });
-  }
-  //?====
-  const product = await Product.findByIdAndUpdate(
-    req.params.id,
-    {
-      images: imagesPaths,
-    },
-    {
-      new: true, //?Kalo mau yang direturn data baru
+router.put(
+  '/gallery-images/:id',
+  uploadOptions.array('images', 10),
+  async (req, res) => {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+      res.status(400).send('Invalid Product ID');
     }
-  );
-  if (!product) {
-    return res.status(404).send('The Product cannot be updated');
-  }
+    const files = req.files;
+    let imagesPaths = [];
+    const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
 
-  res.send(product);
-});
+    //? blok fungsi ini digunakan untuk menyimpan nama filepath menjadi lebih dari satu
+    if (files) {
+      files.map((file) => {
+        imagesPaths.push(`${basePath}${file.filename}`);
+      });
+    }
+    //?====
+    const product = await Product.findByIdAndUpdate(
+      req.params.id,
+      {
+        images: imagesPaths,
+      },
+      {
+        new: true, //?Kalo mau yang direturn data baru
+      }
+    );
+    if (!product) {
+      return res.status(404).send('The Product cannot be updated');
+    }
+
+    res.send(product);
+  }
+);
 
 module.exports = router;

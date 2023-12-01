@@ -27,8 +27,11 @@ const Navigation = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('isAdmin');
     setIsLoggedIn(false);
     setUserEmail(null);
+    setIsAdmin(false);
+    window.location.href = '/user/login';
   };
 
   return (
@@ -83,7 +86,10 @@ const Navigation = () => {
                       ADMIN DASH
                     </Link>
                   ) : (
-                    <Link href="/admin/" className="nav-link relative text-main">
+                    <Link
+                      href="/admin/"
+                      className="nav-link relative text-main"
+                    >
                       {/*INI TIDAK BOLEH DIAKSES OLEH USER BIASA KARNA KONDISI ISADMIN FALSE  */}
                     </Link>
                   )}
@@ -93,7 +99,7 @@ const Navigation = () => {
                     href="/"
                   >
                     <span className="">{userEmail}</span>
-                    <img src="images/user.png" className="w-3 h-3" />
+                    <img src="/images/user.png" className="w-3 h-3" />
                   </Link>
                 </>
               ) : (

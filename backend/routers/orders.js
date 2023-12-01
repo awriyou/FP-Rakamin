@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
         product: orderItem.product,
       });
       newOrderItem = await newOrderItem.save();
-
+      // console.log(newOrderItem);
       return newOrderItem._id;
     })
   );
@@ -50,6 +50,8 @@ router.post('/', async (req, res) => {
         'product',
         'price'
       );
+      console.log(orderItem.product.price);
+      
       const totalPrice = orderItem.product.price * orderItem.quantity;
       return totalPrice;
     })
@@ -68,7 +70,7 @@ router.post('/', async (req, res) => {
     totalPrice: totalPrice,
     user: req.body.user,
   });
-  order = await order.save();
+  // order = await order.save();
 
   if (!order) {
     return res.status(404).send('The order cannot be created');

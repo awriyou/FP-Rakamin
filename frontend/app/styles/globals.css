@@ -51,3 +51,41 @@
     }
     
 }
+
+
+h1{
+    @apply text-xl text-[#488BA8] font-semibold mb-2;
+}
+
+input, textarea{
+    @apply border-2 border-gray-200 rounded-md p-2 w-full;
+    @apply mb-2
+}
+
+input:focus{
+    @apply border-2 border-yellow-300;
+}
+
+label{
+    @apply text-sm text-[#488BA8]
+}
+
+.btn-primary{
+    @apply bg-[#488BA8] text-white px-4 py-2 rounded-md mt-4
+}
+.btn-danger{
+    @apply bg-red-500 text-white px-4 py-2 rounded-md mt-4
+}
+
+table {
+    @apply w-full border-collapse mt-8;
+}
+
+th,
+td {
+    @apply border border-gray-200 p-4 text-left;
+}
+
+th {
+    @apply bg-main text-white;
+}
