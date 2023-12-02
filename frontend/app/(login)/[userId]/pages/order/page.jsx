@@ -75,10 +75,10 @@ const Order = () => {
                 {/* Bagian kiri: Order Details dan Shipping Information */}
                 <div className="w-1/2 pr-4">
                   <div className="mb-6">
-                    <h2 className="text-2xl font-semibold mb-2">
+                    <h2 className="text-2xl font-semibold mb-2"style={{ color: "#488BA8" }}>
                       Order Details
                     </h2>
-                    <p>
+                    <p >
                       <span className="font-semibold">Total Price:</span>{" "}
                       {new Intl.NumberFormat("id-ID", {
                         style: "currency",
@@ -95,7 +95,7 @@ const Order = () => {
                     </p>
                   </div>
                   <div className="mb-6">
-                    <h2 className="text-2xl font-semibold mb-2">
+                    <h2 className="text-2xl font-semibold mb-2" style={{ color: "#488BA8" }}>
                       Shipping Information
                     </h2>
                     <p>
@@ -118,7 +118,7 @@ const Order = () => {
 
                 {/* Bagian kanan: Order Items */}
                 <div className="w-1/2 pl-4">
-                  <h2 className="text-2xl font-semibold mb-4">Order Items</h2>
+                  <h2 className="text-2xl font-semibold mb-4" style={{ color: "#488BA8" }}>Order Items</h2>
                   <ul>
                     {order.orderItems.map((orderItem, index) => (
                       <li

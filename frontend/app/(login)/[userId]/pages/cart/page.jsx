@@ -12,7 +12,7 @@ const Cart = () => {
     phone: "",
   });
   const data = JSON.parse(localStorage.getItem("cart"));
-  console.log("aaaa", data);
+  console.log("data cart:", data);
 
   const extractedData = [];
 
