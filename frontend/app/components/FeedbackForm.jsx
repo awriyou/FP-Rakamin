@@ -1,22 +1,62 @@
-import React from "react";
+"use client"
+import React, { useState } from "react";
 
 const FeedbackForm = () => {
+  const initialFormData = {
+    email: '',
+    subject: '',
+    message: '',
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/feedbacks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Feedback berhasil dikirim:", result);
+        alert('Feedback has been sent');
+
+        setFormData(initialFormData);
+
+      } else {
+        console.error("Feedback gagal dikirim");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
-    <form className="mt-8 md:w-1/2 mx-auto border my-[80px] pt-2 pb-10 px-12 rounded-md">
+    <form className="mt-8 md:w-1/2 mx-auto border my-[80px] pt-2 pb-10 px-12 rounded-md" onSubmit={handleSubmit}>
       <h1 className="flex justify-center mt-[40px] font-extrabold text-main">
         GIVE US FEEDBACK
       </h1>
-      <hr className="mt-4 my-[40px]"/>
+      <hr className="mt-4 my-[40px]" />
       <div className="mb-4">
         <label htmlFor="email" className="block text-sm font-bold text-main">
           EMAIL
         </label>
         <input
-          type="email"
-          id="email"
-          name="email"
+          type="email"         
+            name="email"
           className="mt-1 p-2 w-full border"
           placeholder="Enter your email"
+          onChange={handleChange}
         />
       </div>
 
@@ -26,10 +66,10 @@ const FeedbackForm = () => {
         </label>
         <input
           type="text"
-          id="subject"
           name="subject"
           className="mt-1 p-2 w-full border"
           placeholder="Enter the subject"
+          onChange={handleChange}
         />
       </div>
 
@@ -38,11 +78,11 @@ const FeedbackForm = () => {
           MESSAGE
         </label>
         <textarea
-          id="message"
           name="message"
           rows="4"
           className="mt-1 p-2 w-full border"
           placeholder="Enter your message"
+          onChange={handleChange}
         ></textarea>
       </div>
 

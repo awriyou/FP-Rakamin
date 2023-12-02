@@ -1,5 +1,4 @@
-'use client';
-
+"use client"
 import Layout from '@/app/components/AdminPage/Layout';
 import axios from 'axios';
 import Link from 'next/link';
@@ -14,56 +13,54 @@ const formatCurrency = (number) => {
   }).format(number);
 };
 
-export default function ProductsPage() {
-  const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [orders, setOrders] = useState([])
+export default function OrdersPage() {
+  const [orders, setOrders] = useState([]);
+
   useEffect(() => {
-    axios.get('http://localhost:3000/api/v1/products').then((response) => {
-      setProducts(response.data);
+    axios.get('http://localhost:3000/api/v1/orders/').then((response) => {
+      setOrders(response.data);
     });
   }, []);
-  useEffect(() => {
-    axios.get('http://localhost:3000/api/v1/categories/').then((response) => {
-      setCategories(response.data);
-    });
-  }, []);
+
+  // console.log(orders.id)
   return (
     <Layout>
-      <Link className="btn-primary" href="/admin/products/new">
-        Add new Product
-      </Link>
       <table>
         <thead>
           <tr>
-            <th>Name</th>
+            <th>Id Order</th>
+            <th>Products</th>
+            <th>Date</th>
+            <th>Customer</th>
             <th>Total Price</th>
-            <th>Category</th>
-            <th>isFeatured</th>
-            <th>Actions</th>
+            <th>Payment</th>
+            <th>Status</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {products.map((product) => (
-            <tr key={product.id}>
-              <td>{product.name}</td>
-              <td>{formatCurrency(product.price)}</td>
+          {orders.map((order) => (
+            <tr key={order.id}>
+              <td>{order.id}</td>
               <td>
-                {
-                  categories.find(
-                    (category) => category._id === product.category
-                  )?.name
-                }
+                {order.orderItems.map((orderItem) => (
+                  <div key={orderItem.id}>
+                    <p>Product: {orderItem.product?.name}</p>
+                    <p>Category: {orderItem.product?.category?.name}</p>
+                    <p>Quantity: {orderItem.quantity}</p>
+                  </div>
+                ))}
               </td>
-              <td>{product.isFeatured ? 'Yes' : 'No'}</td>
+              <td>{order.dateOrdered}</td>
+              <td>{order.user?.name}</td>
+              <td>{formatCurrency(order.totalPrice)}</td>
+              <td>{/* Add payment info here */}</td>
+              <td>{order.status}</td>
               <td className="flex gap-4 justify-center">
-                <Link href={`/admin/products/edit/${product.id}`} className="">
+                <Link href={`/admin/orders/edit/${order.id}`}>
                   <img src="/images/fi-sr-pencil.png" className="w-6 h-6" />
                 </Link>
-                <Link
-                  href={`/admin/products/delete/${product.id}`}
-                  className=""
-                >
+                <Link href={`/admin/orders/delete/${order.id}`}>
                   <img src="/images/fi-sr-trash.png" className="w-6 h-6" />
                 </Link>
               </td>
