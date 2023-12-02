@@ -71,7 +71,7 @@ export default function Page({ params }) {
     const fetchUser = async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:8081/api/v1/users/${params.userId}`
+          `http://localhost:3000/api/v1/users/${params.userId}`
         );
         setUser(data);
         setName(data.name);
@@ -220,7 +220,7 @@ export default function Page({ params }) {
           <div>
               <button
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit"
+                type="button"
                 onClick={handleCancel}
               >
                 Cancel

@@ -14,6 +14,7 @@ function authJwt() {
       { url: /\/public\/uploads(.*)/, methods: ['GET', 'OPTIONS'] }, //Membuka endpoint images dan image untuk bebas diakses oleh user
       { url: /\/api\/v1\/products(.*)/, methods: ['GET', 'OPTIONS'] }, //disini akan digunakan regular expression buat menspesifikan semua router get yang ada di endpoint product
       { url: /\/api\/v1\/categories(.*)/, methods: ['GET', 'OPTIONS'] },
+      { url: /\/api\/v1\/users(.*)/, methods: ['GET','PUT', 'OPTIONS'] },
       `${api}/users/login`,
       `${api}/users/register`,
     ],
