@@ -64,12 +64,12 @@ const Order = () => {
 
   return (
     <div>
-      <div className="container mx-auto p-8 flex">
+      <div className=" container mx-auto px-4 py-16 relative rounded border">
         {orders.length > 0 ? (
           orders.map((order) => (
             <div
               key={order._id}
-              className="flex-1 bg-white p-6 rounded-md shadow-md mb-8"
+              className="cart-content p-4 max-w-4xl mx-auto align-middle"
             >
               <div className="flex">
                 {/* Bagian kiri: Order Details dan Shipping Information */}
