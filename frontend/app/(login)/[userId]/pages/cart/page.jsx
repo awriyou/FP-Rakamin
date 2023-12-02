@@ -401,7 +401,7 @@ const Cart = () => {
         {cartData.length === 0 ? (
           <div className="flex justify-center items-center h-full text-center">
             <p className="font-bold mb-4 " style={{ color: "#488BA8" }}>
-              Cart is Emoty
+              Cart is Empty
             </p>
           </div>
         ) : (
