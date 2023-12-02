@@ -1,25 +1,43 @@
-// components/ProductCard.js
-import Link from 'next/link';
-const formatter = new Intl.NumberFormat('id-ID', {
-  style: 'currency',
-  currency: 'IDR',
+'use client'
+import { useState, useEffect } from "react";
+import Link from "next/link";
+const formatter = new Intl.NumberFormat("id-ID", {
+  style: "currency",
+  currency: "IDR",
   minimumFractionDigits: 0,
   maximumFractionDigits: 0,
 });
 const ProductCard = ({ product }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const brandImagePath = product.brand
     ? `/images/ProductPage/Logo Product/${product.brand}.png`
-    : '';
-  const productId = product.id || '';
+    : "";
+  const productId = product.id || "";
+  const userId = localStorage.getItem("userId");
+
+  useEffect(() => {
+    // Set isLoggedIn based on userId
+    if (userId) {
+      setIsLoggedIn(true);
+    }
+  }, [userId]);
 
   const formattedProductName =
     product.name.length < 50
-      ? product.name + ' \u00A0'.repeat(50 - product.name.length)
+      ? product.name + " \u00A0".repeat(50 - product.name.length)
       : product.name;
+
+  console.log(userId);
 
   return (
     <div className="rounded-lg overflow-hidden bg-white border border-gray-300">
-      <Link href={`/pages/products/${productId}`}>
+      <Link
+        href={
+          isLoggedIn
+            ? `/${userId}/pages/products/${productId}`
+            : `/pages/products/${productId} `
+        }
+      >
         <img
           src={product.image}
           alt={product.name}
@@ -29,15 +47,12 @@ const ProductCard = ({ product }) => {
       <div className="p-4">
         <div className="border-t-2 border-gray-200 mt-4"></div>
         <h3 className="text-xl font-raleway font-semibold text-gray-800 mt-4">
-          {/* {product.name} */}
           {formattedProductName}
         </h3>
-
         <div className="flex items-center mt-2">
           <p className="text-xl font-raleway font-bold text-blue-500">
             {formatter.format(product.price)}
           </p>
-          {/* <p className="text-sm font-raleway font-light text-gray-500 ml-auto">{product.sold} units sold</p> */}
         </div>
         <img
           src={brandImagePath}
@@ -48,16 +63,5 @@ const ProductCard = ({ product }) => {
     </div>
   );
 };
-
-// const ProductName = ({ product: { name }, maxLength }) => {
-//   const truncatedName =
-//     name.length > maxLength ? `${name.slice(0, maxLength)}...` : name;
-
-//   return (
-//     <h3 className="text-xl font-raleway font-semibold text-gray-800 mt-4">
-//       {truncatedName}
-//     </h3>
-//   );
-// };
 
 export default ProductCard;
