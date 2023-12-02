@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import BackButton from "@/app/components/BackButton";
-import WhyUs from "@/app/components/WhyUs copy";
+import WhyUs from "@/app/components/WhyUs";
 
 export default function ProductDetail(context) {
   const { productId } = context.params;
