@@ -71,9 +71,9 @@ const Order = () => {
               key={order._id}
               className="cart-content p-4 max-w-4xl mx-auto align-middle"
             >
-              <div className="flex">
+              <div className="flex shadow-md rounded-md w-full">
                 {/* Bagian kiri: Order Details dan Shipping Information */}
-                <div className="w-1/2 pr-4">
+                <div className="w-1/2 pr-4 px-4">
                   <div className="mb-6">
                     <h2 className="text-2xl font-semibold mb-2"style={{ color: "#488BA8" }}>
                       Order Details
