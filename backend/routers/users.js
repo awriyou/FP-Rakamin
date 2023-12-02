@@ -72,6 +72,12 @@ router.put("/:id", async (req, res) => {
       photoUrl = photo.secure_url;
     }
 
+
+    console.log("Old Password:", req.body.oldPassword);
+    console.log("New Password:", req.body.newPassword);
+    console.log("Confirm Password:", req.body.confirmPassword);
+
+
     // Validate old password if updating the password
     if (req.body.newPassword && req.body.newPassword.trim() !== "") {
       const user = await User.findById(req.params.id);
@@ -82,12 +88,7 @@ router.put("/:id", async (req, res) => {
         return res.status(401).send("Invalid old password.");
       }
 
-      // Check if the new password matches the confirmation
-      if (req.body.newPassword !== req.body.confirmPassword) {
-        return res
-          .status(400)
-          .send("New password and confirmation do not match.");
-      }
+      
 
       // Hash the new password
       newPasswordHash = bcrypt.hashSync(req.body.newPassword, 10);
@@ -106,13 +107,19 @@ router.put("/:id", async (req, res) => {
       // Use the uploaded photo URL or leave it empty if there's no change
       photo: photoUrl || undefined,
       // Include the new password hash if it exists
-      ...(newPasswordHash && { passwordHash: newPasswordHash }),
+      // ...(newPasswordHash && { passwordHash: newPasswordHash }),
     };
+
+    // Use the correct variable name (newPasswordHash) here
+    if (newPasswordHash) {
+      updatedFields.passwordHash = newPasswordHash;
+    }
 
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
       updatedFields,
-      { new: true }
+      { new: true },
+      {}
     );
 
     if (!updatedUser) {
@@ -154,7 +161,14 @@ router.post("/login", async (req, res) => {
         expiresIn: "1d",
       }
     );
-    res.status(200).send({ user: user.name, token: token, isAdmin: user.isAdmin });
+    res
+      .status(200)
+      .send({
+        user: user.name,
+        token: token,
+        isAdmin: user.isAdmin,
+        userId: user._id,
+      });
   } else {
     res.status(400).send("password is wrong");
   }
@@ -164,7 +178,9 @@ router.post("/register", async (req, res) => {
   const existingUser = await User.findOne({ email: req.body.email });
 
   if (existingUser) {
-    return res.status(400).send({error: "User with that email already exists"});
+    return res
+      .status(400)
+      .send({ error: "User with that email already exists" });
   }
 
   let user = new User({
