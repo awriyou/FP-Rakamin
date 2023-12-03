@@ -42,7 +42,7 @@ const FeedbackForm = () => {
   };
 
   return (
-    <form className="mt-8 md:w-1/2 mx-auto border my-[80px] pt-2 pb-10 px-12 rounded-md" onSubmit={handleSubmit}>
+    <form className="mt-8 md:w-1/2 mx-auto border my-[80px] pt-2 pb-10 px-12 rounded-md" id="feedback" onSubmit={handleSubmit}>
       <h1 className="flex justify-center mt-[40px] font-extrabold text-main">
         GIVE US FEEDBACK
       </h1>
