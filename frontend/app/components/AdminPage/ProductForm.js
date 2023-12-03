@@ -19,6 +19,7 @@ export default function ProductForm({
   const [image, setImage] = useState();
   const [imageFile, setImageFile] = useState(null);
   const [countInStock, setCountInStock] = useState();
+  const [brand, setBrand] = useState();
   const [categoryId, setCategoryId] = useState(
     existingCategory ? existingCategory._id : ''
   );
@@ -31,7 +32,7 @@ export default function ProductForm({
     });
   }, []);
 
-  const data = { name, description, price, category, image };
+  const data = { name, description, price, category, image, brand };
 
   function uploadImage(ev) {
     const file = ev.target?.files[0];
@@ -49,6 +50,7 @@ export default function ProductForm({
     formData.append('description', description);
     formData.append('price', price);
     formData.append('category', category);
+    formData.append('brand', brand);
     formData.append('countInStock', countInStock);
     if (imageFile) {
       formData.append('image', imageFile);
@@ -117,6 +119,7 @@ export default function ProductForm({
         value={countInStock}
         onChange={(ev) => setCountInStock(ev.target.value)}
       />
+
       <label>Price</label>
       <input
         type="number"
@@ -124,6 +127,23 @@ export default function ProductForm({
         value={price}
         onChange={(ev) => setPrice(ev.target.value)}
       />
+
+      <div className="my-6   ">
+        <label>Brand</label>
+        <select
+          value={brand}
+          onChange={(ev) => setBrand(ev.target.value)}
+          className="p-2 border-2 ml-2"
+        >
+          <option value="">Select brand</option>
+          <option value="Acer">Acer</option>
+          <option value="Asus">Asus</option>
+          <option value="Apple">Apple</option>
+          <option value="Lenovo">Lenovo</option>
+          <option value="Hp">HP</option>
+          <option value="otherbrand">Other Brand</option>
+        </select>
+      </div>
 
       <div className="my-4 ">
         <label>Category : </label>

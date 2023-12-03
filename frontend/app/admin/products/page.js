@@ -29,8 +29,9 @@ export default function ProductsPage() {
   }, []);
   return (
     <Layout>
-      <div className="mb-4">Hi Admin</div>
-      <Link className="btn-primary" href="/admin/products/new">
+      {/* <div className="mb-4">Hi Admin</div> */}
+      <div className='mb-4'></div>
+      <Link className="btn-primary " href="/admin/products/new">
         Add new Product
       </Link>
       <table>
@@ -39,6 +40,8 @@ export default function ProductsPage() {
             <th>Name</th>
             <th>Price</th>
             <th>Category</th>
+            <th>Stock</th>
+            <th>brand</th>
             <th>isFeatured</th>
             <th>Actions</th>
           </tr>
@@ -46,7 +49,7 @@ export default function ProductsPage() {
         <tbody>
           {products.map((product) => (
             <tr key={product.id}>
-              <td>{product.name}</td>
+              <td className='flex items-center'><img src={product.image} className='w-10 h-10'/>{product.name}</td>
               <td>{formatCurrency(product.price)}</td>
               <td>
                 {
@@ -54,6 +57,10 @@ export default function ProductsPage() {
                     (category) => category._id === product.category
                   )?.name
                 }
+              </td>
+              <td>{product.countInStock}</td>
+              <td>
+                {product.brand}
               </td>
               <td>{product.isFeatured ? 'Yes' : 'No'}</td>
               <td className="flex gap-4 justify-center">
